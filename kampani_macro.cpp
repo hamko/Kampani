@@ -71,7 +71,7 @@ void clickSpeedingUp(void)
 
 void clickReward(void)
 {
-  repStart(10); {
+  repStart(20); {
     click(944, 348);
   } repEnd();
 }
@@ -117,9 +117,9 @@ void enterNormal(void)
   wait_s(6);
   clickSpeedingUp();
 
-  wait_s(120);
+  wait_s(110);
   click(optionx, option1y);
-  wait_s(100);
+  wait_s(80);
 
   clickReward();
 }
