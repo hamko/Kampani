@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cstdlib>
 using namespace std;
 #define woutput(str) wcout << (str) << endl;
 #define output(str) cout << (str) << endl;
@@ -8,9 +9,12 @@ using namespace std;
 #define option1y 410
 #define option2y 457
 #define option3y 495
+#define sectionx 379
 #define episodex 379
 #define episode1y 350
 #define episode8y 682
+#define section1y 354
+#define section5y 663
 #define questx 473
 #define questy 460
 #define backx 281
@@ -19,6 +23,11 @@ using namespace std;
 void comment(string str)
 {
   cout << "' " << str << endl;
+}
+int getSectionY(int i)
+{
+  double interval = (section5y - section1y) / 4;
+  return (int)((double)section1y + (i - 1) * interval);
 }
 int getEpisodeY(int i)
 {
@@ -76,50 +85,89 @@ void clickReward(void)
   } repEnd();
 }
 
-void enterLabyrinth1112(void)
+// Mag 60, 40, Sol 50, 60
+void enterLabyrinth(string route)
 {
-  click(questx, questy); // クエストボタン
-  wait_s(5); // クエストロード
+  // Quest Button title
+  click(questx, questy); wait_s(5); click(228, 376); wait_s(5);
 
   click(backx, backy); click(backx, backy); // 戻る
-  click(862, 490); click(1008, 591); click(613, 539); click(812, 398); // 無限選択
+  click(862, 490); click(1008, 591); click(613, 539); wait_s(2); click(812, 398); // 無限選択
 
   wait_s(15);
   clickSpeedingUp();
 
-  click(optionx, option1y);
-  wait_s(120);
-  click(optionx, option1y);
-  wait_s(150);
-  click(optionx, option1y);
-  wait_s(120);
-  click(optionx, option2y);
-  wait_s(150);
+  if (route == "1112") {
+    click(optionx, option1y);
+    wait_s(60);
+    click(optionx, option1y);
+    wait_s(90);
+    click(optionx, option1y);
+    wait_s(90);
+    click(optionx, option2y);
+    wait_s(120);
+  } else {
+    cerr << "No Labyrinth quest" << endl;
+    exit(1);
+  }
 
   clickReward();
 }
 
-void enterNormal(void)
+// Mag 60, 40, Sol 50, 60
+void enterNormal(int section, int episode)
 {
-  click(questx, questy);
-  wait_s(5); // クエストロード
+  // Quest Button title
+  click(questx, questy); wait_s(5); click(228, 376); wait_s(5);
 
   click(backx, backy); click(backx, backy); // 戻る
   click(329, 381);
-  click(375, 605);
+  click(sectionx, getSectionY(section));
+  click(episodex, getEpisodeY(episode));
 
-  click(episodex, getEpisodeY(6));
   wait_s(5);
 
   click(1020, 590); wait_s(1);
   click(634, 549); wait_s(1);
 
-  wait_s(6);
+  wait_s(10);
   clickSpeedingUp();
 
-  wait_s(110);
-  click(optionx, option1y);
-  wait_s(80);
+  if (section == 4 && episode == 6) {
+    wait_s(110);
+    click(optionx, option1y);
+    wait_s(80);
+  } else if (section == 3 && episode == 1) {
+    wait_s(130);
+  } else {
+    cerr << "No Normal quest" << endl;
+    exit(1);
+  }
+
+  clickReward();
+}
+
+void enterAnn(void)
+{
+  // Quest Button title
+  click(questx, questy); wait_s(5); click(228, 376); wait_s(5);
+
+  click(1117, 271); // character story
+  wait_s(5);
+  click(504, 489); // kurerikku
+  wait_s(2);
+  click(392, 679); // ann
+  wait_s(2);
+  click(664,424); // epi2
+  wait_s(2);
+  click(1077,660); // enter 
+  wait_s(2);
+  click(624,540); // enter2
+
+  wait_s(16);
+  clickSpeedingUp();
+
+  wait_s(280);
 
   clickReward();
 }
@@ -130,11 +178,18 @@ int main(void)
   repStart(8); {
     comment("Normal"); 
     repStart(2); {
-      enterNormal();
+      enterNormal(3, 1);
     } repEnd();
+    /*
+       comment("Ann"); 
+       repStart(1); {
+       enterAnn();
+       } repEnd();
+       */
+
     comment("Labyrinth"); 
     repStart(1); {
-      enterLabyrinth1112();
+      enterLabyrinth("1112");
     } repEnd();
   } repEnd();
 
