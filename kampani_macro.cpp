@@ -13,6 +13,8 @@ using namespace std;
 #define episodex 379
 #define episode1y 350
 #define episode8y 682
+#define story_episode1y 422
+#define story_episode2y 475
 #define section1y 354
 #define section5y 663
 #define questx 473
@@ -138,7 +140,7 @@ void enterNormal(int section, int episode)
     click(optionx, option1y);
     wait_s(80);
   } else if (section == 3 && episode == 1) {
-    wait_s(130);
+    wait_s(220);
   } else {
     cerr << "No Normal quest" << endl;
     exit(1);
@@ -147,7 +149,7 @@ void enterNormal(int section, int episode)
   clickReward();
 }
 
-void enterAnn(void)
+void enterAnn(int story_episode)
 {
   // Quest Button title
   click(questx, questy); wait_s(5); click(228, 376); wait_s(5);
@@ -158,7 +160,11 @@ void enterAnn(void)
   wait_s(2);
   click(392, 679); // ann
   wait_s(2);
-  click(664,424); // epi2
+  if (story_episode == 1) {
+    click(664,story_episode1y); // epi2
+  } else {
+    click(664,story_episode2y); // epi2
+  }
   wait_s(2);
   click(1077,660); // enter 
   wait_s(2);
@@ -176,16 +182,16 @@ int main(void)
 {
   gotoHome();
   repStart(8); {
+    /*
     comment("Normal"); 
     repStart(2); {
       enterNormal(3, 1);
     } repEnd();
-    /*
-       comment("Ann"); 
-       repStart(1); {
-       enterAnn();
-       } repEnd();
-       */
+    */
+    comment("Ann"); 
+    repStart(1); {
+      enterAnn(1);
+    } repEnd();
 
     comment("Labyrinth"); 
     repStart(1); {
