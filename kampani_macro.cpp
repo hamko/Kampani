@@ -13,8 +13,8 @@ using namespace std;
 #define episodex 379
 #define episode1y 350
 #define episode8y 682
-#define story_episode1y 422
-#define story_episode2y 475
+#define story_episode1y 475
+#define story_episode2y 422
 #define section1y 354
 #define section5y 663
 #define questx 473
@@ -101,11 +101,11 @@ void enterLabyrinth(string route)
 
   if (route == "1112") {
     click(optionx, option1y);
-    wait_s(60);
+    wait_s(50);
     click(optionx, option1y);
-    wait_s(90);
+    wait_s(50);
     click(optionx, option1y);
-    wait_s(90);
+    wait_s(75);
     click(optionx, option2y);
     wait_s(120);
   } else {
@@ -173,6 +173,55 @@ void enterAnn(int story_episode)
   wait_s(16);
   clickSpeedingUp();
 
+  wait_s(250);
+
+  clickReward();
+}
+
+void enterOttilie()
+{
+  // Quest Button title
+  click(questx, questy); wait_s(5); click(228, 376); wait_s(5);
+
+  click(1117, 271); // character story
+  wait_s(5);
+  click(515, 465); // woria
+  wait_s(2);
+  click(362, 422); // Ottilie
+  wait_s(2);
+  click(665, 430); // ep1
+  wait_s(2);
+  click(1077,660); // enter 
+  wait_s(2);
+  click(624,540); // enter2
+
+  wait_s(16);
+  clickSpeedingUp();
+
+  wait_s(250);
+
+  clickReward();
+}
+
+void enterValentine()
+{
+  click(473, 460);
+  wait_s(2);
+  click(531, 353);
+  wait_s(2);
+  click(292, 270);
+  wait_s(2);
+  click(364, 364);
+  wait_s(2);
+  click(400, 400);
+  wait_s(2);
+  click(1050, 580);
+  wait_s(5);
+  click(600, 540);
+
+  wait_s(10);
+  clickSpeedingUp();
+
   wait_s(280);
 
   clickReward();
@@ -188,11 +237,17 @@ int main(void)
       enterNormal(3, 1);
     } repEnd();
     */
+    /*
     comment("Ann"); 
     repStart(1); {
       enterAnn(1);
     } repEnd();
+    */
 
+    comment("Ottilie"); 
+    repStart(1); {
+      enterOttilie();
+    } repEnd();
     comment("Labyrinth"); 
     repStart(1); {
       enterLabyrinth("1112");
